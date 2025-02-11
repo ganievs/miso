@@ -1,15 +1,14 @@
 import { StrictMode } from "react";
-import './App.css'
-import ProvidersList from "./Providers/Providers";
+import { RouterProvider, createRouter } from "@tanstack/react-router";
+import { routeTree } from "./routeTree.gen";
+
+const router = createRouter({ routeTree });
 
 function App() {
 
   return (
     <StrictMode>
-      <div>
-        <h1 className="Providers">Providers</h1>
-        <ProvidersList/>
-      </div>
+      <RouterProvider router={router} />
     </StrictMode>
   );
 }
