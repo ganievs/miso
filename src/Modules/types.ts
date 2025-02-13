@@ -21,6 +21,6 @@ export interface ModulesResponse {
     next_offset: number;
     next_url: string;
   };
-  providers: Module[];
+  modules: Module[];
 }
 
