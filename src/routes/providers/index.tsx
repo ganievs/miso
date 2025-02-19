@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { ProvidersResponse, Provider } from '../../Providers/types'
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, Link } from '@tanstack/react-router'
 
 const ProvidersList: React.FC = () => {
   const [providers, setProviders] = useState<Provider[]>([])
@@ -31,11 +31,14 @@ const ProvidersList: React.FC = () => {
     <div>
       {providers.map((provider) => (
         <div key={provider.id}>
-          <h2>{provider.name}</h2>
+          <Link to={`${provider.namespace}/${provider.name}`} >
+             {provider.name}
+          </Link>
           <p>{provider.description}</p>
         </div>
-      ))}
-    </div>
+  ))
+}
+    </div >
   )
 }
 

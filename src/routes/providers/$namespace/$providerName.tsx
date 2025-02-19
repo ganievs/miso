@@ -4,16 +4,19 @@ import { createFileRoute } from '@tanstack/react-router'
 
 const ProviderInfo: React.FC = () => {
   const [provider, setProvider] = useState<Provider>()
-  const { namespace, providerId } = Route.useParams()
+  const { namespace, providerName } = Route.useParams()
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`/api/v1/providers/${namespace}/${providerId}`, {
-          mode: 'cors',
-          headers: {
-            'Content-Type': 'application/json',
+        const response = await fetch(
+          `/api/v1/providers/${namespace}/${providerName}`,
+          {
+            mode: 'cors',
+            headers: {
+              'Content-Type': 'application/json',
+            },
           },
-        })
+        )
         if (!response.ok) {
           throw new Error('Failed to fetch')
         }
@@ -37,6 +40,6 @@ const ProviderInfo: React.FC = () => {
   )
 }
 
-export const Route = createFileRoute('/providers/$namespace/$providerId')({
+export const Route = createFileRoute('/providers/$namespace/$providerName')({
   component: ProviderInfo,
 })
