@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { ModulesResponse, Module } from '../Modules/types'
+import { ModulesResponse, Module } from '../../Modules/types'
 import { createFileRoute } from '@tanstack/react-router'
 
 const ModulesList: React.FC = () => {
@@ -39,6 +39,6 @@ const ModulesList: React.FC = () => {
   )
 }
 
-export const Route = createFileRoute('/modules')({
+export const Route = createFileRoute('/modules/')({
   component: ModulesList,
 })

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { ProvidersResponse, Provider } from '../Providers/types'
+import { ProvidersResponse, Provider } from '../../Providers/types'
 import { createFileRoute } from '@tanstack/react-router'
 
 const ProvidersList: React.FC = () => {
@@ -39,6 +39,6 @@ const ProvidersList: React.FC = () => {
   )
 }
 
-export const Route = createFileRoute('/providers')({
+export const Route = createFileRoute('/providers/')({
   component: ProvidersList,
 })
