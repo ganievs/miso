@@ -1,28 +1,28 @@
 import { createRootRoute, Link, Outlet } from '@tanstack/react-router'
 import { TanStackRouterDevtools } from '@tanstack/router-devtools'
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { Button } from '@radix-ui/themes';
+import { Button, Flex } from '@radix-ui/themes';
 
 export const Route = createRootRoute({
   component: () => (
     <>
-      <div className="p-2 flex gap-2">
-        <Link to="/" className="[&.active]:font-bold">
+      <Flex gap="1">
+        <Link to=".">
           <Button>
             Home
           </Button>
-        </Link>{' '}
-        <Link to="/providers" className="[&.active]:font-bold">
+        </Link>
+        <Link to="/providers">
           <Button>
             Providers
           </Button>
-        </Link>{' '}
-        <Link to="/modules" className="[&.active]:font-bold">
+        </Link>
+        <Link to="/modules">
           <Button>
             Modules
           </Button>
-        </Link>{' '}
-      </div>
+        </Link>
+      </Flex>
       <hr />
       <Outlet />
       <TanStackRouterDevtools />
