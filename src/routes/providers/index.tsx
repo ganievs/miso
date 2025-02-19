@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { ProvidersResponse, Provider } from '../../Providers/types'
 import { createFileRoute, Link } from '@tanstack/react-router'
+import { Avatar, Box, Flex, Card, Text } from '@radix-ui/themes'
 
 const ProvidersList: React.FC = () => {
   const [providers, setProviders] = useState<Provider[]>([])
@@ -30,14 +31,32 @@ const ProvidersList: React.FC = () => {
   return (
     <div>
       {providers.map((provider) => (
-        <div key={provider.id}>
-          <Link to={`${provider.namespace}/${provider.name}`} >
-             {provider.name}
-          </Link>
-          <p>{provider.description}</p>
-        </div>
-  ))
-}
+        <Flex gap="3" direction="column">
+          <Box>
+            <Card asChild size="1">
+              <Flex gap="3" align="center">
+                <Link to={`${provider.namespace}/${provider.name}`}>
+                  <Avatar
+                    size="4"
+                    src={provider.logo_url}
+                    radius="full"
+                    fallback={provider.name[0]}
+                  />
+                  <Box>
+                    <Text as="div" size="2" weight="bold">
+                      {provider.name}
+                    </Text>
+                    <Text as="div" color="gray" size="2">
+                      {provider.description}
+                    </Text>
+                  </Box>
+                </Link>
+              </Flex>
+            </Card>
+          </Box>
+        </Flex>
+      ))
+      }
     </div >
   )
 }
