@@ -11,7 +11,6 @@ const ProvidersList: React.FC = () => {
     queryFn: () => getProviders(),
     staleTime: 30000,
   });
-  console.log(data);
   return (
     <div>
       {status === 'pending' ? (
