@@ -34,12 +34,11 @@ const ProvidersList: React.FC = () => {
         <Flex gap="3" direction="column">
           <Box>
             <Card asChild size="1">
-              <Flex gap="3" align="center">
-                <Link to={`${provider.namespace}/${provider.name}`}>
+              <Link to={`${provider.namespace}/${provider.name}`}>
+                <Flex gap="4" align="center">
                   <Avatar
-                    size="4"
+                    size="2"
                     src={provider.logo_url}
-                    radius="full"
                     fallback={provider.name[0]}
                   />
                   <Box>
@@ -50,8 +49,8 @@ const ProvidersList: React.FC = () => {
                       {provider.description}
                     </Text>
                   </Box>
-                </Link>
-              </Flex>
+                </Flex>
+              </Link>
             </Card>
           </Box>
         </Flex>
