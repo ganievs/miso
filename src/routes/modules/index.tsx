@@ -1,44 +1,60 @@
 import React from 'react'
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, Link } from '@tanstack/react-router'
 import getModules from '../../api/getModules';
 import { useQuery } from '@tanstack/react-query';
+import { Avatar, Box, Card, Flex, Spinner, Text } from '@radix-ui/themes';
+import { Module } from '../../Modules/types';
 
 const ModulesList: React.FC = () => {
-  const { status, data, error, isLoading } = useQuery({
-    queryKey: ["providers"],
-    queryFn: () => getModules(),
+  const { status, data, error } = useQuery({
+    queryKey: ["modules"],
+    queryFn: getModules,
     staleTime: 30000,
   });
 
-  if (isLoading) {
-    return (
-      <div className="past-orders">
-        <h2>LOADING …</h2>
-      </div>
-    );
-  }
   if (status === "pending") {
     return (
-      <div className="past-orders">
-        <h2>LOADING …</h2>
+      <div>
+        <Spinner />
       </div>
     );
   }
   if (status === "error") {
     return (
-      <div className="past-orders">
+      <div>
         <span>Error: {error.message}</span>
       </div>
     );
   }
+
   return (
     <div>
-      {data.modules.map((module) => (
-        <div key={module.id}>
-          <h2>{module.name}</h2>
-          <p>{module.description}</p>
-        </div>
-      ))}
+      {data.modules.map((module: Module) => (
+        <Flex gap="3" direction="column">
+          <Box>
+            <Card asChild size="1">
+              <Link to={`${module.namespace}/${module.name}`}>
+                <Flex gap="4" align="center">
+                  <Avatar
+                    size="2"
+                    src={module.provider_logo_url}
+                    fallback={module.name[0]}
+                  />
+                  <Box>
+                    <Text as="div" size="2" weight="bold">
+                      {module.name}
+                    </Text>
+                    <Text as="div" color="gray" size="2">
+                      {module.description}
+                    </Text>
+                  </Box>
+                </Flex>
+              </Link>
+            </Card>
+          </Box>
+        </Flex>
+      ))
+      }
     </div>
   )
 }

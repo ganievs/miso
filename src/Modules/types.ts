@@ -11,7 +11,7 @@ export interface Module {
   published_at: string;
   downloads: number;
   tier: string;
-  logo_url: string;
+  provider_logo_url: string;
 }
 
 export interface ModulesResponse {
