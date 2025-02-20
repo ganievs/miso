@@ -1,5 +1,5 @@
-import React from 'react'
-import { createFileRoute, Link } from '@tanstack/react-router'
+import React from 'react';
+import { createFileRoute, Link } from '@tanstack/react-router';
 import getModules from '../../api/getModules';
 import { useQuery } from '@tanstack/react-query';
 import { Avatar, Box, Card, Flex, Spinner, Text } from '@radix-ui/themes';
