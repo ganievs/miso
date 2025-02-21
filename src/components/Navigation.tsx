@@ -2,7 +2,7 @@ import { TabNav } from "@radix-ui/themes";
 import { NavLink } from "./NavLink";
 
 
-export function NavMenu() {
+export const NavMenu = () => {
 
   return (
     <TabNav.Root>

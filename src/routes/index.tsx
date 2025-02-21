@@ -1,26 +1,32 @@
 import React from 'react';
 import { createFileRoute } from '@tanstack/react-router';
-import { MagnifyingGlassIcon } from '@radix-ui/react-icons';
-import { Container, Flex, TextField } from '@radix-ui/themes';
+import { Container, Flex } from '@radix-ui/themes';
+import { Search } from '../components/Search';
+import getModules from '../api/getModules';
+import { useQuery } from '@tanstack/react-query';
 
 const Home: React.FC = () => {
+  const { data } = useQuery({
+    queryKey: ["modules"],
+    queryFn: getModules,
+    staleTime: 30000,
+  });
+
+  const modules = data?.modules ?? [];
+
   return (
     <div>
       <Flex justify="center" align="center" height="80vh">
         <Container size="1">
-          <TextField.Root size="3" placeholder="Search the providers,modules…">
-            <TextField.Slot>
-              <MagnifyingGlassIcon height="16" width="16" />
-            </TextField.Slot>
-          </TextField.Root>
+          <Search options={modules} />
         </Container>
       </Flex>
     </div >
-  )
-}
+  );
+}; 
 
 export const Route = createFileRoute('/')({
   component: Home,
-})
+});
 
 
