@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Provider } from '../../../Providers/types'
 import { createFileRoute } from '@tanstack/react-router'
+import { Box, Text, Heading, Flex, Avatar, Container } from '@radix-ui/themes'
 
 const ProviderInfo: React.FC = () => {
   const [provider, setProvider] = useState<Provider>()
@@ -31,12 +32,21 @@ const ProviderInfo: React.FC = () => {
   }, [])
 
   return (
-    <div>
-      <div key={provider?.id}>
-        <h2>{provider?.name}</h2>
-        <p>{provider?.description}</p>
-      </div>
-    </div>
+    <>
+      <Flex p="4" gap="3" >
+        <Container size="1" align="left" >
+          <Avatar
+            size="2"
+            src={provider?.logo_url}
+            fallback={provider?.name[0] ?? 'P'}
+          />
+          <Box key={provider?.id}>
+            <Heading>{provider?.name}</Heading>
+            <Text>{provider?.description}</Text>
+          </Box>
+        </Container>
+      </Flex>
+    </>
   )
 }
 
