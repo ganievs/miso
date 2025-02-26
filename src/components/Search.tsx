@@ -1,17 +1,24 @@
-import { MagnifyingGlassIcon } from '@radix-ui/react-icons';
-import { Box, TextField } from '@radix-ui/themes';
-import Fuse from 'fuse.js'
-import { useState } from 'react';
-import { Module } from '../Modules/types';
-
+import {
+  Combobox,
+  ComboboxItem,
+  ComboboxList,
+  ComboboxProvider,
+} from "@ariakit/react";
+import * as RadixPopover from "@radix-ui/react-popover";
+import { useRef, useState } from "react";
+import { Module } from "../Modules/types";
+import Fuse from "fuse.js";
+import "./style.css";
 
 interface SearchProps {
   options: Module[];
 }
 
-
 export const Search: React.FC<SearchProps> = ({ options }) => {
-  const [query, setQuery] = useState<string>('');
+  const comboboxRef = useRef<HTMLInputElement>(null);
+  const listboxRef = useRef<HTMLDivElement>(null);
+
+  const [open, setOpen] = useState(false);
   const [results, setResults] = useState<Module[]>([]);
 
   const fuse = new Fuse(options, {
@@ -20,43 +27,49 @@ export const Search: React.FC<SearchProps> = ({ options }) => {
   });
 
   const handleSearch = (value: string) => {
-    setQuery(value);
     const searchResults = fuse.search(value);
     setResults(searchResults.map(result => result.item));
     console.log(searchResults);
   };
 
   return (
-    <>
-      <TextField.Root size="3" placeholder="Search the providers,modules…"
-        value={query}
-        onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleSearch(e.target.value)}
-      >
-        <TextField.Slot>
-          <MagnifyingGlassIcon height="16" width="16" />
-        </TextField.Slot>
-      </TextField.Root>
-      {results.length > 0 && (
-        <Box
-          position="absolute"
-          top="100%"
-          left="0"
-          right="0"
+    <RadixPopover.Root open={open} onOpenChange={setOpen}>
+      <ComboboxProvider open={open} setOpen={setOpen}>
+        <RadixPopover.Anchor asChild>
+          <Combobox
+            ref={comboboxRef}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleSearch(e.target.value)}
+            placeholder="Search the providers,modules…"
+            className="combobox"
+          />
+        </RadixPopover.Anchor>
+        <RadixPopover.Content
+          asChild
+          sideOffset={8}
+          onOpenAutoFocus={(event) => event.preventDefault()}
+          onInteractOutside={(event) => {
+            const target = event.target as Element | null;
+            const isCombobox = target === comboboxRef.current;
+            const inListbox = target && listboxRef.current?.contains(target);
+            if (isCombobox || inListbox) {
+              event.preventDefault();
+            }
+          }}
         >
-          {results.map((option, index) => (
-            <Box
-              key={index}
-              onClick={() => {
-                setQuery(option.name);
-              }}
-            >
-              {option.name}
-            </Box>
-          ))}
-        </Box>
-      )}
-    </>
-  )
+        {results.length > 0 && (
+          <ComboboxList ref={listboxRef} role="listbox" className="listbox">
+            {
+              results.map((option) => (
+                <ComboboxItem focusOnHover value={option.id}>
+                  {option.name}
+                </ComboboxItem>
+              ))
+            }
+          </ComboboxList>
+        )}
+        </RadixPopover.Content>
+      </ComboboxProvider>
+    </RadixPopover.Root>
+  );
 }
-
 
