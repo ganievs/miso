@@ -2,15 +2,42 @@ import * as Ariakit from "@ariakit/react";
 import { startTransition, useState } from "react";
 import "./style.css";
 import { Module } from "../../Modules/types.ts";
+import { Provider } from "../../Providers/types.ts";
 import Fuse from "fuse.js";
 import { Link } from "@tanstack/react-router";
 
 interface SearchProps {
-  options: Module[];
+  options: (Module | Provider)[];
 }
 
+const Output = (value: Module | Provider) => {
+  if ('provider_logo_url' in value) {
+    return (
+      <Ariakit.ComboboxItem
+        key={value.id}
+        value={value.name}
+        render={<Link to="/modules/$namespace/$moduleName/$provider" params={{ namespace: value.namespace, moduleName: value.name, provider: value.provider }} />}
+        className="combobox-item"
+      />
+    )
+  };
+
+  if ('logo_url' in value) {
+    return (
+      <Ariakit.ComboboxItem
+        key={value.id}
+        value={value.name}
+        render={<Link to="/providers/$namespace/$providerName" params={{ namespace: value.namespace, providerName: value.name }} />}
+        className="combobox-item"
+      />
+    )
+  };
+
+  return null;
+
+}
 export const Search: React.FC<SearchProps> = ({ options }) => {
-  const [results, setResults] = useState<Module[]>([]);
+  const [results, setResults] = useState<Module[] | Provider[]>([]);
 
   const fuse = new Fuse(options, {
     keys: ['name'],
@@ -38,12 +65,7 @@ export const Search: React.FC<SearchProps> = ({ options }) => {
       <Ariakit.ComboboxPopover gutter={8} sameWidth className="popover">
         {results.length ? (
           results.map((value) => (
-            <Ariakit.ComboboxItem
-              key={value.id}
-              value={value.name}
-              render={<Link to="/modules" />}
-              className="combobox-item"
-            />
+            <Output {...value} />
           ))
         ) : (
           <div className="no-results">No results found</div>
@@ -52,4 +74,3 @@ export const Search: React.FC<SearchProps> = ({ options }) => {
     </Ariakit.ComboboxProvider>
   );
 }
-

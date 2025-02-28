@@ -1,39 +1,37 @@
 import React from 'react';
 import { createFileRoute } from '@tanstack/react-router';
 import { Container, Flex } from '@radix-ui/themes';
-// import { Search, SearchWithSuggestions } from '../components/Search';
 import getModules from '../api/getModules';
-import { useQuery } from '@tanstack/react-query';
+import { useQueries } from '@tanstack/react-query';
 import { Search } from '../components/Search/Search';
+import getProviders from '../api/getProviders';
 
 const Home: React.FC = () => {
-  const { data } = useQuery({
-    queryKey: ["modules"],
-    queryFn: getModules,
-    staleTime: 30000,
+  const data = useQueries({
+    queries: [
+      {
+        queryKey: ["modules"],
+        queryFn: getModules,
+      },
+      {
+        queryKey: ["providers"],
+        queryFn: getProviders,
+      }
+    ]
   });
 
-  const modules = data?.modules ?? [];
-
-  // return (
-  //   <div>
-  //     <Flex justify="center" align="center" height="80vh">
-  //       <Container size="1">
-  //         <SearchWithSuggestions options={modules} />
-  //       </Container>
-  //     </Flex>
-  //   </div >
-  // );
+  const modules = data[0].data?.modules ?? []
+  const providers = data[1].data?.providers ?? []
   return (
     <div>
       <Flex justify="center" align="center" height="80vh">
         <Container size="1">
-          <Search options={modules}/>
+          <Search options={[...modules, ...providers]} />
         </Container>
       </Flex>
     </div >
   );
-}; 
+};
 
 export const Route = createFileRoute('/')({
   component: Home,
