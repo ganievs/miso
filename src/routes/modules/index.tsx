@@ -33,7 +33,7 @@ const ModulesList: React.FC = () => {
         <Flex gap="3" direction="column">
           <Box>
             <Card asChild size="1">
-              <Link to={`${module.namespace}/${module.name}`}>
+              <Link to={`${module.namespace}/${module.name}/${module.provider}`}>
                 <Flex gap="4" align="center">
                   <Avatar
                     size="2"

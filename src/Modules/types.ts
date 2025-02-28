@@ -5,6 +5,7 @@ export interface Module {
   name: string;
   alias: string | null;
   version: string;
+  provider: string;
   tag: string;
   description: string;
   source: string;
