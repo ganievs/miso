@@ -33,29 +33,29 @@ const ProvidersList: React.FC = () => {
         <Flex gap="3" direction="column">
           <Box>
             <Card asChild size="1">
-              <Link to={`${provider.namespace}/${provider.name}`}>
-                <Flex gap="4" align="center">
-                  <Avatar
-                    size="2"
-                    src={provider.logo_url}
-                    fallback={provider.name[0]}
-                  />
-                  <Box>
-                    <Text as="div" size="2" weight="bold">
-                      {provider.name}
-                    </Text>
-                    <Text as="div" color="gray" size="2">
-                      {provider.description}
-                    </Text>
-                  </Box>
-                </Flex>
-              </Link>
-            </Card>
-          </Box>
+              <Link to="/providers/$namespace/$providerName" params={{namespace: provider.namespace, providerName: provider.name}}>
+              <Flex gap="4" align="center">
+                <Avatar
+                  size="2"
+                  src={provider.logo_url}
+                  fallback={provider.name[0]}
+                />
+                <Box>
+                  <Text as="div" size="2" weight="bold">
+                    {provider.name}
+                  </Text>
+                  <Text as="div" color="gray" size="2">
+                    {provider.description}
+                  </Text>
+                </Box>
+              </Flex>
+            </Link>
+          </Card>
+        </Box>
         </Flex>
-      ))
-      }
-    </div>
+  ))
+}
+    </div >
   )
 }
 

@@ -37,7 +37,7 @@ const Output = (value: Module | Provider) => {
 
 }
 export const Search: React.FC<SearchProps> = ({ options }) => {
-  const [results, setResults] = useState<Module[] | Provider[]>([]);
+  const [results, setResults] = useState<(Module | Provider)[]>([]);
 
   const fuse = new Fuse(options, {
     keys: ['name'],

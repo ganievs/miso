@@ -5,6 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 import { Avatar, Box, Card, Flex, Spinner, Text } from '@radix-ui/themes';
 import { Module } from '../../Modules/types';
 
+
 const ModulesList: React.FC = () => {
   const { status, data, error } = useQuery({
     queryKey: ["modules"],
@@ -33,7 +34,7 @@ const ModulesList: React.FC = () => {
         <Flex gap="3" direction="column">
           <Box>
             <Card asChild size="1">
-              <Link to={`${module.namespace}/${module.name}/${module.provider}`}>
+              <Link to="/modules/$namespace/$moduleName/$provider" params={{ namespace: module.namespace, moduleName: module.name, provider: module.provider }}>
                 <Flex gap="4" align="center">
                   <Avatar
                     size="2"

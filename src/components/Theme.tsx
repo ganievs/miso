@@ -4,7 +4,6 @@ import { MoonIcon, SunIcon } from "@radix-ui/react-icons";
 import { IconButton } from "@radix-ui/themes";
 
 export const ThemeChanger = ({
-	children,
 	...props
 }: React.ComponentPropsWithoutRef<typeof IconButton>) => {
 	const { theme, systemTheme, setTheme } = useTheme();
