@@ -7,7 +7,7 @@ import { TanStackRouterVite } from "@tanstack/router-plugin/vite";
 export default defineConfig({
   plugins: [TanStackRouterVite(), react()],
   test: {
-    env: "happy-dom",
+    environment: 'happy-dom',
   },
   server: {
     proxy: {
